@@ -7,8 +7,8 @@ library(netstat)
 urls<-list("https://www.wunderground.com/history/daily/us/ca/burbank/KBUR/date/", "https://www.wunderground.com/history/daily/us/ca/reseda/KBUR/date/")
 weatherData<-read.csv(file.path("Template","weatherData.csv"))
 
-#function which takes in a startdate and enddate which create a table with data. 
-#make sure dates input for the parameter is in the form of year-month-day ex. "2024-2-23"
+#function which takes a startdate and enddate and then create a table with data. 
+#make sure the input for each day is in the form of year-month-day ex. "2024-2-23"
 #example call weather_data("2024-2-20","2024-2-23")
 weather_data<-function(startdate,enddate){
   
@@ -18,7 +18,7 @@ remote<-rsDriver(browser = "chrome",chromever="122.0.6261.69",verbose = FALSE,po
 remDr <- remote[["client"]]
 
 
-#create a list which includes sequence of from start to end date.
+#create a list thorugh the sequence days starting from startdate to enddate.
 dates <- seq(as.Date(startdate), as.Date(enddate), by=1)
 
 #url iteration
@@ -26,9 +26,9 @@ for(u in urls){
   #date iteration
   for(i in seq_along(dates)){
    
-    #create the url with concatenate the url+date
+    #create the full url with concatenation of the url and date
     url = paste0(u, dates[i])
-    #on the remote brower it opens the link
+    # opens the link from the browser 
     remDr$navigate(url)
     
     #gets/read the html content of the page
@@ -43,20 +43,20 @@ for(u in urls){
     flip<-t(clean_data) #transpose the data from rows to column and column to rows.
     
     
-    parts <- unlist(strsplit(url, "/"))# split the url by each /
+    parts <- unlist(strsplit(url, "/"))# split the url by each "/" character
     location <- parts[8] #uses the 8th part which holds the location
-    date <- c(dates[i]) # uses the current date iteration its on
+    date <- c(dates[i]) # uses the current date its on
     
-    # Create a new data frame with the new columns added in front of the existing columns
+    # Create a new table with the new columns, date and location.
     new_data <- data.frame(date, location, flip)
     
-    #puts the the old data with the new data
+    # combine the old data with the new data. 
     final <- rbind(as.matrix(weatherData), as.matrix(new_data))
     
-    # Convert the result back to a data frame
+    # Convert the result back.
     weatherData <- as.data.frame(final)
     
-    #writes/update csv for iteration of url and data thus making it save progress
+    #writes/update csv for each iteration of url and data thus making it save it's progress.
     write.csv(weatherData, "weatherData.csv", append = TRUE, row.names = FALSE)
   }
 }
