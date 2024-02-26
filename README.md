@@ -1,17 +1,17 @@
 
 # Underground Weather Scraper
 
-This Web Scrapper will scrape data from Weather Underground (https://www.wunderground.com/) using RSelenium and Rvest. It's goal is to scrape history data for each day from multipe differnt stations around California. It collects temperature, precipitation, dew point, wind speed, visibility, and sea level pressure. 
+This Web Scrapper will scrape data from Weather Underground (https://www.wunderground.com/) using RSelenium and Rvest. Its goal is to scrape the following data from different weather stations around California for each day. The following data collected are temperature, perception, dew point, wind speed, visibility, and sea level pressure. 
 
 
 ## Installation
 
-To use code install a  R compiler and the  following packages in R: RSelenium, rvest, netstat.
+To use code install a R compiler and the following packages in R: RSelenium, rvest, netstat.
 
 ```R
 install.packages(c("rvest", "netstat","RSelenium"))
 ```
-In code please make sure to change the remDr to match with a browser of your choice and the version. A good resource to figure this out is the following link: https://www.youtube.com/watch?v=GnpJujF9dBw
+In the code, please change the remDr to match a browser of your choice and its version. A good resource to figure this out is the following link: https://www.youtube.com/watch?v=GnpJujF9dBw
     
 ## Usage/Examples
 
