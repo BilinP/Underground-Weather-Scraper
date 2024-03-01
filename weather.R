@@ -30,7 +30,7 @@ for(u in urls){
     url = paste0(u, dates[i])
     # opens the link from the browser 
     remDr$navigate(url)
-    
+    Sys.sleep(1)
     #gets/read the html content of the page
     html<-remDr$getPageSource()[[1]]
     htmlread<-read_html(html)  
@@ -57,13 +57,12 @@ for(u in urls){
     weatherData <- as.data.frame(final)
     
     #writes/update csv for each iteration of url and data thus making it save it's progress.
-    write.csv(weatherData, "weatherData.csv", append = TRUE, row.names = FALSE)
+    write.csv(weatherData, "weatherData.csv",row.names = FALSE)
   }
 }
 #stops the Selenium and closes the window 
-remDr$close()
-remDr$server$stop()
-
+remDr$closeWindow()
+remote$server$stop()
 #return the weatherData as table
 return(weatherData)
 }
